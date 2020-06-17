@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Ravenous.Models.DbModels;
 
-namespace Ravenous.Pages.Recipies
+namespace Ravenous.Pages.Recipes
 {
     public class IndexModel : PageModel
     {

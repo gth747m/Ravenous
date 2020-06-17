@@ -2,14 +2,13 @@
 @model Ravenous.Pages.Groceries.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Grocery Item Details";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
+<hr />
 <div>
-    <h4>GroceryList</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GroceryList.IngredientAmount)

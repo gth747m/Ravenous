@@ -15,18 +15,26 @@ namespace Ravenous.Models.DbModels
         public int PkRecipe { get; set; }
         [Required, Display(Name = "Recipe"), StringLength(128)]
         public string RecipeName { get; set; }
-        [Required, Display(Name = "Prep Time")]
+        [Required, DataType(DataType.Time),
+            DisplayFormat(ApplyFormatInEditMode = true,
+            DataFormatString = @"{0:hh\:mm}"),
+            Display(Name = "Prep Time")]
         public TimeSpan PrepTime { get; set; }
-        [Required, Display(Name = "Cook Time")]
+        [Required, DataType(DataType.Time),
+            DisplayFormat(ApplyFormatInEditMode = true,
+            DataFormatString = @"{0:hh\:mm}"),
+            Display(Name = "Cook Time")]
         public TimeSpan CookTime { get; set; }
         [Display(Name = "Recipe Type")]
         public int FkRecipeType { get; set; }
-        [Display(Name = "Rating")]
+        [Display(Name = "Rating"), Range(0, 10)]
         public int? Rating { get; set; }
 
         [Display(Name = "Recipe Type")]
         public virtual RecipeType RecipeType { get; set; }
+        [Display(Name = "Recipe Steps")]
         public virtual ICollection<RecipeStep> RecipeStep { get; set; }
+        [Display(Name = "Recipe Tags")]
         public virtual ICollection<RecipeTag> RecipeTag { get; set; }
     }
 }

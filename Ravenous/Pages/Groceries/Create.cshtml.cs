@@ -11,17 +11,19 @@ namespace Ravenous.Pages.Groceries
 {
     public class CreateModel : PageModel
     {
-        private readonly Ravenous.Models.DbModels.RavenousContext _context;
+        private readonly RavenousContext _context;
 
-        public CreateModel(Ravenous.Models.DbModels.RavenousContext context)
+        public CreateModel(RavenousContext context)
         {
             _context = context;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["FkIngredient"] = new SelectList(_context.Ingredient, "PkIngredient", "IngredientName");
-        ViewData["FkMeasurement"] = new SelectList(_context.Measurement, "PkMeasurement", "MeasurementName");
+            ViewData["FkIngredient"] = new SelectList(_context.Ingredient
+                .OrderBy(i => i.IngredientName), "PkIngredient", "IngredientName");
+            ViewData["FkMeasurement"] = new SelectList(_context.Measurement
+                .OrderBy(m => m.MeasurementName), "PkMeasurement", "MeasurementName");
             return Page();
         }
 

@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Ravenous.Models.DbModels;
 
-namespace Ravenous.Pages.Recipies
+namespace Ravenous.Pages.Recipes
 {
     public class CreateModel : PageModel
     {
@@ -20,7 +21,9 @@ namespace Ravenous.Pages.Recipies
 
         public IActionResult OnGet()
         {
-        ViewData["FkRecipeType"] = new SelectList(_context.RecipeType, "PkRecipeType", "RecipeTypeName");
+            ViewData["FkRecipeType"] = new SelectList(
+                _context.RecipeType.OrderBy(t => t.RecipeTypeName), 
+                "PkRecipeType", "RecipeTypeName");
             return Page();
         }
 
@@ -36,10 +39,16 @@ namespace Ravenous.Pages.Recipies
                 return Page();
             }
 
-            _context.Recipe.Add(Recipe);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            if (await TryUpdateModelAsync<Recipe>(
+                Recipe, "recipe",
+                r => r.RecipeName,
+                r => r.RecipeType))
+            {
+                _context.Recipe.Add(Recipe);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Edit", new { id = Recipe.PkRecipe });
+            }
+            return Page();
         }
     }
 }

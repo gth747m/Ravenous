@@ -2,15 +2,14 @@
 @model Ravenous.Pages.Groceries.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Grocery Item";
 }
 
-<h1>Delete</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h3>Are you sure you want to delete this?</h3>
+<hr />
 <div>
-    <h4>GroceryList</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GroceryList.IngredientAmount)

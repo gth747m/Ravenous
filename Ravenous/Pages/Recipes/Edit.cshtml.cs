@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ravenous.Models.DbModels;
 
-namespace Ravenous.Pages.Recipies
+namespace Ravenous.Pages.Recipes
 {
     public class EditModel : PageModel
     {
@@ -30,13 +30,18 @@ namespace Ravenous.Pages.Recipies
             }
 
             Recipe = await _context.Recipe
-                .Include(r => r.RecipeType).FirstOrDefaultAsync(m => m.PkRecipe == id);
-
+                .Include(r => r.RecipeType)
+                .Include(r => r.RecipeStep)
+                .Include(r => r.RecipeTag)
+                .FirstOrDefaultAsync(m => m.PkRecipe == id);
             if (Recipe == null)
             {
                 return NotFound();
             }
-           ViewData["FkRecipeType"] = new SelectList(_context.RecipeType, "PkRecipeType", "RecipeTypeName");
+
+            ViewData["FkRecipeType"] = new SelectList(
+                _context.RecipeType.OrderBy(t => t.RecipeTypeName),
+                "PkRecipeType", "RecipeTypeName");
             return Page();
         }
 

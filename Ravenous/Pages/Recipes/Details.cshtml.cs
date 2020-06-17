@@ -7,18 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Ravenous.Models.DbModels;
 
-namespace Ravenous.Pages.Recipies
+namespace Ravenous.Pages.Recipes
 {
-    public class DeleteModel : PageModel
+    public class DetailsModel : PageModel
     {
         private readonly Ravenous.Models.DbModels.RavenousContext _context;
 
-        public DeleteModel(Ravenous.Models.DbModels.RavenousContext context)
+        public DetailsModel(Ravenous.Models.DbModels.RavenousContext context)
         {
             _context = context;
         }
 
-        [BindProperty]
         public Recipe Recipe { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -36,24 +35,6 @@ namespace Ravenous.Pages.Recipies
                 return NotFound();
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Recipe = await _context.Recipe.FindAsync(id);
-
-            if (Recipe != null)
-            {
-                _context.Recipe.Remove(Recipe);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

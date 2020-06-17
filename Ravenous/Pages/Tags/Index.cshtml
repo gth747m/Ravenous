@@ -2,14 +2,15 @@
 @model Ravenous.Pages.Tags.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tag Index";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<hr />
 <table class="table">
     <thead>
         <tr>

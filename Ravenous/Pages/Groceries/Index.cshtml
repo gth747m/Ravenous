@@ -2,10 +2,10 @@
 @model Ravenous.Pages.Groceries.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Grocery List";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GroceryList[0].IngredientAmount)
+                @Html.DisplayNameFor(model => model.GroceryList[0].Ingredient)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GroceryList[0].Ingredient)
+                @Html.DisplayNameFor(model => model.GroceryList[0].IngredientAmount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GroceryList[0].Measurement)
@@ -29,10 +29,10 @@
 @foreach (var item in Model.GroceryList) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IngredientAmount)
+                @Html.DisplayFor(modelItem => item.Ingredient.IngredientName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ingredient.IngredientName)
+                @Html.DisplayFor(modelItem => item.IngredientAmount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Measurement.MeasurementName)

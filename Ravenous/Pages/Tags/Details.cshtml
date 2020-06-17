@@ -2,14 +2,13 @@
 @model Ravenous.Pages.Tags.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Tag Details";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
+<hr />
 <div>
-    <h4>Tag</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Tag.TagName)
