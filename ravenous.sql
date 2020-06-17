@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `ravenous` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `ravenous` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `ravenous`;
 -- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
@@ -23,7 +23,7 @@ USE `ravenous`;
 
 DROP TABLE IF EXISTS `grocery_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `grocery_list` (
   `pk_grocery_list` int unsigned NOT NULL AUTO_INCREMENT,
   `fk_ingredient` int unsigned NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `grocery_list` (
   KEY `grocery_list_ibfk_2_idx` (`fk_measurement`),
   CONSTRAINT `grocery_list_ibfk_1` FOREIGN KEY (`fk_ingredient`) REFERENCES `ingredient` (`pk_ingredient`) ON UPDATE CASCADE,
   CONSTRAINT `grocery_list_ibfk_2` FOREIGN KEY (`fk_measurement`) REFERENCES `measurement` (`pk_measurement`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `ingredient` (
   `pk_ingredient` int unsigned NOT NULL AUTO_INCREMENT,
   `ingredient_name` varchar(64) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE `ingredient` (
   UNIQUE KEY `ingredient_name_UNIQUE` (`ingredient_name`),
   KEY `ingredient_type_ibfk_1_idx` (`fk_ingredient_type`),
   CONSTRAINT `ingredient_ibfk_1` FOREIGN KEY (`fk_ingredient_type`) REFERENCES `ingredient_type` (`pk_ingredient_type`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,13 +80,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ingredient_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `ingredient_type` (
   `pk_ingredient_type` int unsigned NOT NULL AUTO_INCREMENT,
   `ingredient_type_name` varchar(64) NOT NULL,
   PRIMARY KEY (`pk_ingredient_type`),
   UNIQUE KEY `ingredient_type_UNIQUE` (`ingredient_type_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,12 +105,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `measurement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `measurement` (
   `pk_measurement` int unsigned NOT NULL AUTO_INCREMENT,
   `measurement_name` varchar(32) NOT NULL,
   PRIMARY KEY (`pk_measurement`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +129,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `recipe` (
   `pk_recipe` int unsigned NOT NULL AUTO_INCREMENT,
   `recipe_name` varchar(128) NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE `recipe` (
   UNIQUE KEY `recipe_name_UNIQUE` (`recipe_name`),
   KEY `recipe_type_ibfk_1_idx` (`fk_recipe_type`),
   CONSTRAINT `recipe_ibfk_1` FOREIGN KEY (`fk_recipe_type`) REFERENCES `recipe_type` (`pk_recipe_type`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +159,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_ingredient` (
   `pk_recipe_ingredient` int unsigned NOT NULL AUTO_INCREMENT,
   `fk_ingredient` int unsigned NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE `recipe_ingredient` (
   KEY `fk_recipe_ingredient_ibfk_2_idx` (`fk_measurement`),
   CONSTRAINT `recipe_ingredient_ibfk_1` FOREIGN KEY (`fk_ingredient`) REFERENCES `ingredient` (`pk_ingredient`) ON UPDATE CASCADE,
   CONSTRAINT `recipe_ingredient_ibfk_2` FOREIGN KEY (`fk_measurement`) REFERENCES `measurement` (`pk_measurement`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +188,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_step`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_step` (
   `pk_recipe_step` int unsigned NOT NULL AUTO_INCREMENT,
   `fk_recipe` int unsigned NOT NULL,
@@ -197,7 +197,7 @@ CREATE TABLE `recipe_step` (
   PRIMARY KEY (`pk_recipe_step`),
   KEY `recipe_step_ibfk_1_idx` (`fk_recipe`),
   CONSTRAINT `recipe_step_ibfk_1` FOREIGN KEY (`fk_recipe`) REFERENCES `recipe` (`pk_recipe`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +215,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_tag` (
   `pk_recipe_tag` int unsigned NOT NULL AUTO_INCREMENT,
   `fk_recipe` int unsigned NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE `recipe_tag` (
   KEY `recipe_tag_ibfk_2_idx` (`fk_tag`),
   CONSTRAINT `recipe_tag_ibfk_1` FOREIGN KEY (`fk_recipe`) REFERENCES `recipe` (`pk_recipe`) ON UPDATE CASCADE,
   CONSTRAINT `recipe_tag_ibfk_2` FOREIGN KEY (`fk_tag`) REFERENCES `tag` (`pk_tag`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,12 +243,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_type` (
   `pk_recipe_type` int unsigned NOT NULL AUTO_INCREMENT,
   `recipe_type_name` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`pk_recipe_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,12 +267,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `tag` (
   `pk_tag` int unsigned NOT NULL AUTO_INCREMENT,
   `tag_name` varchar(64) NOT NULL,
   PRIMARY KEY (`pk_tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
