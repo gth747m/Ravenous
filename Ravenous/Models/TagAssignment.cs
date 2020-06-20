@@ -38,7 +38,7 @@ namespace Ravenous.Models
             Recipe recipe)
         {
             var assignments = new List<TagAssignment>();
-            var tags = recipe.RecipeTag.Select(t => t.PkRecipeTag);
+            var tags = recipe.RecipeTag.Select(t => t.FkTag);
             context.Tag.ForEach(t => assignments.Add(new TagAssignment
             {
                 TagName = t.TagName,

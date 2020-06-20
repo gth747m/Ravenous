@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Ravenous.Models;
 using Ravenous.Models.DbModels;
 
 namespace Ravenous.Pages.Recipes
@@ -21,6 +22,8 @@ namespace Ravenous.Pages.Recipes
 
         [BindProperty]
         public Recipe Recipe { get; set; }
+        [BindProperty]
+        public List<TagAssignment> TagList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,6 +41,7 @@ namespace Ravenous.Pages.Recipes
             {
                 return NotFound();
             }
+            TagList = TagAssignment.GetTagAssignments(_context, Recipe);
 
             ViewData["FkRecipeType"] = new SelectList(
                 _context.RecipeType.OrderBy(t => t.RecipeTypeName),

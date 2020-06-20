@@ -9,7 +9,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Recipe.PkRecipe" />
@@ -42,15 +42,15 @@
                 <input asp-for="Recipe.Rating" class="form-control" />
                 <span asp-validation-for="Recipe.Rating" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="table">
-                    <table>
-                            @*
-                        <tr>
+            <div class="row">
+                <div class="form-group">
+                    <div class="table">
+                        <table>
+                            <tr>
                             @{
                                 int cnt = 0;
 
-                                foreach (var course in Model)
+                                foreach (var tag in Model.TagList)
                                 {
                                     if (cnt++ % 3 == 0)
                                     {
@@ -58,16 +58,16 @@
                                     }
                                     @:<td>
                                         <input type="checkbox"
-                                               name="selectedCourses"
-                                               value="@course.CourseID"
-                                               @(Html.Raw(course.Assigned ? "checked=\"checked\"" : "")) />
-                                               @course.CourseID @:  @course.Title
+                                               name="selectedTags"
+                                               value="@tag.TagName"
+                                               @(Html.Raw(tag.Assigned ? "checked=\"checked\"" : "")) />
+                                               @tag.TagName
                                     @:</td>
                                 }
                                 @:</tr>
                             }
-                            *@
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
