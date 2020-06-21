@@ -42,32 +42,38 @@
                 <input asp-for="Recipe.Rating" class="form-control" />
                 <span asp-validation-for="Recipe.Rating" class="text-danger"></span>
             </div>
-            <div class="row">
-                <div class="form-group">
-                    <div class="table">
-                        <table>
-                            <tr>
-                            @{
-                                int cnt = 0;
-
-                                foreach (var tag in Model.TagList)
+            <div class="form-group">
+                <label asp-for="Recipe.RecipeStep" class="control-label"></label>
+                @foreach(var step in Model.Recipe.RecipeStep)
+                {
+                    @*<input asp-for="" class="form-control"/>*@
+                }
+                <span asp-validation-for="Recipe.RecipeStep" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipe.RecipeTag" class="control-label"></label>
+                <div class="table">
+                    <table>
+                        <tr>
+                        @{
+                            int cnt = 0;
+                            foreach (var tag in Model.TagList)
+                            {
+                                if (cnt++ % 3 == 0)
                                 {
-                                    if (cnt++ % 3 == 0)
-                                    {
-                                        @:</tr><tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                               name="selectedTags"
-                                               value="@tag.TagName"
-                                               @(Html.Raw(tag.Assigned ? "checked=\"checked\"" : "")) />
-                                               @tag.TagName
-                                    @:</td>
+                                    @:</tr><tr>
                                 }
-                                @:</tr>
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedTags"
+                                           value="@tag.TagName"
+                                           @(Html.Raw(tag.Assigned ? "checked=\"checked\"" : "")) />
+                                           @tag.TagName
+                                @:</td>
                             }
-                        </table>
-                    </div>
+                            @:</tr>
+                        }
+                    </table>
                 </div>
             </div>
             <div class="form-group">

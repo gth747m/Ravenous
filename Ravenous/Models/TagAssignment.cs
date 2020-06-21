@@ -48,5 +48,45 @@ namespace Ravenous.Models
 
             return assignments;
         }
+
+        public static void SetTagAssignments(
+            RavenousContext context,
+            Recipe recipe,
+            string[] selectedTags)
+        {
+            if (recipe.RecipeTag == null)
+            {
+                recipe.RecipeTag = new List<RecipeTag>();
+            }
+            HashSet<string> selectedHashSet = new HashSet<string>(selectedTags);
+            HashSet<int> currentTags = new HashSet<int>(recipe.RecipeTag.Select(t => t.FkTag));
+            foreach(Tag tag in context.Tag)
+            {
+                // User wants this tag assigned
+                if (selectedHashSet.Contains(tag.TagName))
+                {
+                    // If it doesn't have this tag yet
+                    if (!currentTags.Contains(tag.PkTag))
+                    {
+                        recipe.RecipeTag.Add(
+                            new RecipeTag
+                            {
+                                FkRecipe = recipe.PkRecipe,
+                                FkTag = tag.PkTag
+                            });
+                    }
+                }
+                else // User doesn't want this tag
+                {
+                    // If it currently has this tag
+                    if (currentTags.Contains(tag.PkTag))
+                    {
+                        RecipeTag tagToDelete = recipe.RecipeTag
+                            .SingleOrDefault(t => t.FkTag == tag.PkTag);
+                        context.Remove(tagToDelete);
+                    }
+                }
+            }
+        }
     }
 }

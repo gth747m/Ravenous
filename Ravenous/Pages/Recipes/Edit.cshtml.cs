@@ -36,6 +36,7 @@ namespace Ravenous.Pages.Recipes
                 .Include(r => r.RecipeType)
                 .Include(r => r.RecipeStep)
                 .Include(r => r.RecipeTag)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.PkRecipe == id);
             if (Recipe == null)
             {
@@ -51,7 +52,7 @@ namespace Ravenous.Pages.Recipes
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedTags)
         {
             if (!ModelState.IsValid)
             {
@@ -62,6 +63,13 @@ namespace Ravenous.Pages.Recipes
 
             try
             {
+                Recipe recipeToUpdate = await _context.Recipe
+                    .Include(r => r.RecipeType)
+                    .Include(r => r.RecipeStep)
+                    .Include(r => r.RecipeTag)
+                    .ThenInclude(t => t.Tag)
+                    .FirstOrDefaultAsync(m => m.PkRecipe == id);
+                TagAssignment.SetTagAssignments(_context, recipeToUpdate, selectedTags);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
