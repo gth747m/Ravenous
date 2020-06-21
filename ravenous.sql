@@ -1,15 +1,13 @@
-CREATE DATABASE  IF NOT EXISTS `ravenous` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `ravenous`;
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MariaDB dump 10.17  Distrib 10.4.13-MariaDB, for Linux (x86_64)
 --
--- Host: localhost    Database: ravenous
+-- Host: 127.0.0.1    Database: ravenous
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	10.4.13-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,12 +21,12 @@ USE `ravenous`;
 
 DROP TABLE IF EXISTS `grocery_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `grocery_list` (
-  `pk_grocery_list` int unsigned NOT NULL AUTO_INCREMENT,
-  `fk_ingredient` int unsigned NOT NULL,
+  `pk_grocery_list` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_ingredient` int(10) unsigned NOT NULL,
   `ingredient_amount` float NOT NULL,
-  `fk_measurement` int unsigned NOT NULL,
+  `fk_measurement` int(10) unsigned NOT NULL,
   PRIMARY KEY (`pk_grocery_list`),
   KEY `grocery_list_ibfk_1_idx` (`fk_ingredient`),
   KEY `grocery_list_ibfk_2_idx` (`fk_measurement`),
@@ -52,11 +50,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ingredient` (
-  `pk_ingredient` int unsigned NOT NULL AUTO_INCREMENT,
-  `ingredient_name` varchar(64) NOT NULL,
-  `fk_ingredient_type` int unsigned NOT NULL,
+  `pk_ingredient` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ingredient_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `fk_ingredient_type` int(10) unsigned NOT NULL,
   PRIMARY KEY (`pk_ingredient`),
   UNIQUE KEY `ingredient_name_UNIQUE` (`ingredient_name`),
   KEY `ingredient_type_ibfk_1_idx` (`fk_ingredient_type`),
@@ -80,10 +78,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ingredient_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ingredient_type` (
-  `pk_ingredient_type` int unsigned NOT NULL AUTO_INCREMENT,
-  `ingredient_type_name` varchar(64) NOT NULL,
+  `pk_ingredient_type` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ingredient_type_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`pk_ingredient_type`),
   UNIQUE KEY `ingredient_type_UNIQUE` (`ingredient_type_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -105,10 +103,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `measurement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `measurement` (
-  `pk_measurement` int unsigned NOT NULL AUTO_INCREMENT,
-  `measurement_name` varchar(32) NOT NULL,
+  `pk_measurement` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `measurement_name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`pk_measurement`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,19 +127,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipe` (
-  `pk_recipe` int unsigned NOT NULL AUTO_INCREMENT,
-  `recipe_name` varchar(128) NOT NULL,
+  `pk_recipe` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `recipe_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `prep_time` time NOT NULL DEFAULT '00:00:00',
   `cook_time` time NOT NULL DEFAULT '00:00:00',
-  `fk_recipe_type` int unsigned NOT NULL,
-  `rating` int unsigned DEFAULT '0',
+  `fk_recipe_type` int(10) unsigned NOT NULL,
+  `rating` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`pk_recipe`),
   UNIQUE KEY `recipe_name_UNIQUE` (`recipe_name`),
   KEY `recipe_type_ibfk_1_idx` (`fk_recipe_type`),
   CONSTRAINT `recipe_ibfk_1` FOREIGN KEY (`fk_recipe_type`) REFERENCES `recipe_type` (`pk_recipe_type`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,6 +148,7 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
+INSERT INTO `recipe` VALUES (1,'Scotch','00:00:00','00:00:00',10,0);
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,12 +158,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_ingredient` (
-  `pk_recipe_ingredient` int unsigned NOT NULL AUTO_INCREMENT,
-  `fk_ingredient` int unsigned NOT NULL,
+  `pk_recipe_ingredient` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_ingredient` int(10) unsigned NOT NULL,
   `ingredient_amount` float NOT NULL,
-  `fk_measurement` int unsigned NOT NULL,
+  `fk_measurement` int(10) unsigned NOT NULL,
   PRIMARY KEY (`pk_recipe_ingredient`),
   KEY `fk_ingredient_ibfk_1_idx` (`fk_ingredient`),
   KEY `fk_recipe_ingredient_ibfk_2_idx` (`fk_measurement`),
@@ -188,12 +187,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_step`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_step` (
-  `pk_recipe_step` int unsigned NOT NULL AUTO_INCREMENT,
-  `fk_recipe` int unsigned NOT NULL,
-  `recipe_step_number` int unsigned NOT NULL,
-  `recipe_step_instruction` varchar(512) NOT NULL,
+  `pk_recipe_step` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_recipe` int(10) unsigned NOT NULL,
+  `recipe_step_number` int(10) unsigned NOT NULL,
+  `recipe_step_instruction` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`pk_recipe_step`),
   KEY `recipe_step_ibfk_1_idx` (`fk_recipe`),
   CONSTRAINT `recipe_step_ibfk_1` FOREIGN KEY (`fk_recipe`) REFERENCES `recipe` (`pk_recipe`) ON UPDATE CASCADE
@@ -215,17 +214,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_tag` (
-  `pk_recipe_tag` int unsigned NOT NULL AUTO_INCREMENT,
-  `fk_recipe` int unsigned NOT NULL,
-  `fk_tag` int unsigned NOT NULL,
+  `pk_recipe_tag` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_recipe` int(10) unsigned NOT NULL,
+  `fk_tag` int(10) unsigned NOT NULL,
   PRIMARY KEY (`pk_recipe_tag`),
   KEY `recipe_tag_ibfk_1_idx` (`fk_recipe`),
   KEY `recipe_tag_ibfk_2_idx` (`fk_tag`),
   CONSTRAINT `recipe_tag_ibfk_1` FOREIGN KEY (`fk_recipe`) REFERENCES `recipe` (`pk_recipe`) ON UPDATE CASCADE,
   CONSTRAINT `recipe_tag_ibfk_2` FOREIGN KEY (`fk_tag`) REFERENCES `tag` (`pk_tag`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,6 +233,7 @@ CREATE TABLE `recipe_tag` (
 
 LOCK TABLES `recipe_tag` WRITE;
 /*!40000 ALTER TABLE `recipe_tag` DISABLE KEYS */;
+INSERT INTO `recipe_tag` VALUES (1,1,2);
 /*!40000 ALTER TABLE `recipe_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,10 +243,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `recipe_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipe_type` (
-  `pk_recipe_type` int unsigned NOT NULL AUTO_INCREMENT,
-  `recipe_type_name` varchar(64) DEFAULT NULL,
+  `pk_recipe_type` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `recipe_type_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`pk_recipe_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -267,10 +267,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tag` (
-  `pk_tag` int unsigned NOT NULL AUTO_INCREMENT,
-  `tag_name` varchar(64) NOT NULL,
+  `pk_tag` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `tag_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`pk_tag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -294,4 +294,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-06 19:56:16
+-- Dump completed on 2020-06-20 21:32:35
