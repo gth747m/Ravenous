@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Ravenous.Models.DbModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ravenous
 {
@@ -29,10 +27,6 @@ namespace Ravenous
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddDbContext<RavenousContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("ravenousdb"))
-            );
-            Console.WriteLine(Configuration.GetConnectionString("ravenousdb"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
