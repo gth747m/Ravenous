@@ -1,0 +1,24 @@
+﻿.title-row {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.title-heading {
+  flex-grow: 1;
+}
+
+.add-btn {
+  margin-right: 5px;
+}
+
+.form-btn-group {
+  display: inline-flex;
+}
+
+.form-btn-group > .btn {
+  margin-right: 5px;
+}
+
+.form-btn-group > .btn:last-of-type {
+  margin-right: 0px !important;
+}

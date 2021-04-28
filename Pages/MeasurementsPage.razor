@@ -1,13 +1,13 @@
-@page "/ingredients"
+@page "/measurements"
 
 <div class="title-row">
-  <h3 class="title-heading">Ingredients</h3>
-  <button class="btn btn-outline-dark add-btn" @onclick="OnAddIngredientClick">
+  <h3 class="title-heading">Measurements</h3>
+  <button class="btn btn-outline-dark add-btn" @onclick="OnAddMeasurementClick">
       <span class="oi oi-plus" aria-hidden="true"></span> New
   </button>
 </div>
 
-@if (Ingredients == null)
+@if (Measurements == null)
 {
   <h3>Loading...</h3>
 }
@@ -20,8 +20,8 @@ else
       </tr>
     </thead>
     <tbody>
-      <Virtualize Items="Ingredients" Context="ingredient">
-        <tr @onclick=@(_ => OnIngredientClick(ingredient.IngredientId))>
+      <Virtualize Items="Measurements" Context="ingredient">
+        <tr @onclick=@(_ => OnMeasurementClick(ingredient.MeasurementId))>
           <td>@ingredient.Name</td>
         </tr>
       </Virtualize>
