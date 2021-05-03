@@ -1,0 +1,52 @@
+﻿@page "/recipes/add"
+
+<h3>Add Recipe</h3>
+
+<EditForm Model="@Recipe" OnValidSubmit="@OnValidSumbit">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+  <div class="form-group">
+      <div class="input-group">
+          <div class="input-group-prepend">
+              <label class="input-group-text">Name</label>
+          </div>
+          <InputText class="form-control" @bind-Value=Recipe.Name />
+      </div>
+  </div>
+  <div class="form-group">
+      <div class="input-group">
+          <div class="input-group-prepend">
+              <label class="input-group-text">Rating</label>
+          </div>
+          <InputNumber class="form-control" @bind-Value=Recipe.Rating />
+      </div>
+  </div>
+  <div class="form-group">
+    <label>Ingredients</label>
+    @foreach(var ingredient in Recipe.RecipeIngredients)
+    {
+      <div class="input-group">
+          <InputSelect class="form-control" @bind-Value=ingredient.IngredientId >
+            @foreach(var ingred in IngredientList)
+            {
+              <option value="@ingred.IngredientId">@ingred.Name</option>
+            }
+          </InputSelect>
+          <InputNumber class="form-control" @bind-Value=ingredient.Amount />
+          <InputSelect class="form-control" @bind-Value=ingredient.MeasurementId >
+            @foreach(var measure in MeasurementList)
+            {
+              <option value="@measure.MeasurementId">@measure.Name</option>
+            }
+          </InputSelect>
+      </div>
+    }
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+        <button type="button" class="btn btn-outline-primary" @onclick="@OnAddIngredient">Add Ingredient</button>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+  <button type="reset" class="btn btn-danger" @onclick="@OnCancel">Cancel</button>
+</EditForm>

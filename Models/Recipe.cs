@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ravenous.Models
 {
@@ -11,7 +12,9 @@ namespace Ravenous.Models
         }
 
         public int RecipeId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required, Range(0.0, 5.0)]
         public int Rating { get; set; }
 
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set;}

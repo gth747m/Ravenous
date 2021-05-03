@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ravenous.Pages
+namespace Ravenous.Pages.Recipes
 {
-    public partial class MeasurementEditPage : ComponentBase
+    public partial class RecipeAddPage : ComponentBase
     {
         [Inject]
         public RavenousContext Context { get; set; }
@@ -16,27 +16,28 @@ namespace Ravenous.Pages
         public NavigationManager Navigation { get; set; }
         [Parameter]
         public int Id { get; set; }
-        public Measurement Measurement { get; set; }
+        public Recipe Recipe { get; set; }
+        public List<Ingredient> IngredientList { get; set; }
+        public List<Measurement> MeasurementList { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Measurement = await Context.Measurement
-                .Where(i => i.MeasurementId == Id)
-                .FirstOrDefaultAsync();
+            Recipe = new Recipe();
+            IngredientList = await Context.Ingredient
+                .OrderBy(i => i.Name)
+                .ToListAsync();
+            MeasurementList = await Context.Measurement
+                .OrderBy(m => m.Name)
+                .ToListAsync();
         }
 
         public async Task OnValidSumbit()
         {
+            Context.Recipe.Add(Recipe);
             await Context.SaveChangesAsync();
             NavBack();
         }
 
-        public async Task OnDelete()
-        {
-            Context.Measurement.Remove(Measurement);
-            await Context.SaveChangesAsync();
-            NavBack();
-        }
         public void OnCancel()
         {
             NavBack();
@@ -44,7 +45,12 @@ namespace Ravenous.Pages
 
         public void NavBack()
         {
-            Navigation.NavigateTo("/measurements");
+            Navigation.NavigateTo("/recipes");
+        }
+
+        public void OnAddIngredient()
+        {
+            Recipe.RecipeIngredients.Add(new RecipeIngredient());
         }
     }
 }

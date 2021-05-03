@@ -294,6 +294,8 @@ namespace Ravenous.Models
                 new Ingredient { Name = "Onion Powder" },
                 new Ingredient { Name = "Onion" },
                 new Ingredient { Name = "Orange Juice" },
+                new Ingredient { Name = "Orange Peel" },
+                new Ingredient { Name = "Orange Zest" },
                 new Ingredient { Name = "Orange" },
                 new Ingredient { Name = "Oregano" },
                 new Ingredient { Name = "Orzo" },
@@ -469,20 +471,23 @@ namespace Ravenous.Models
             }
             // Add Measurements
             var measurements = new Measurement[]{
-                new Measurement { Name = "whole" },
-                new Measurement { Name = "half" },
-                new Measurement { Name = "quarter" },
                 new Measurement { Name = "cup" },
-                new Measurement { Name = "tbsp" },
-                new Measurement { Name = "tsp" },
+                new Measurement { Name = "gallon" },
+                new Measurement { Name = "gram" },
+                new Measurement { Name = "half" },
+                new Measurement { Name = "lb" },
                 new Measurement { Name = "liter" },
+                new Measurement { Name = "mL" },
+                new Measurement { Name = "oz." },
+                new Measurement { Name = "piece" },
+                new Measurement { Name = "pinch" },
                 new Measurement { Name = "pint" },
                 new Measurement { Name = "quart" },
-                new Measurement { Name = "gallon" },
-                new Measurement { Name = "mL" },
-                new Measurement { Name = "gram" },
-                new Measurement { Name = "oz." },
-                new Measurement { Name = "lb" },
+                new Measurement { Name = "quarter" },
+                new Measurement { Name = "shake" },
+                new Measurement { Name = "tbsp" },
+                new Measurement { Name = "tsp" },
+                new Measurement { Name = "whole" },
             };
             foreach (var measure in measurements)
             {

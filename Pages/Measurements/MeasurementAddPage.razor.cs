@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ravenous.Pages
+namespace Ravenous.Pages.Measurements
 {
-    public partial class IngredientAddPage : ComponentBase
+    public partial class MeasurementAddPage : ComponentBase
     {
         [Inject]
         public RavenousContext Context { get; set; }
@@ -16,16 +16,16 @@ namespace Ravenous.Pages
         public NavigationManager Navigation { get; set; }
         [Parameter]
         public int Id { get; set; }
-        public Ingredient Ingredient { get; set; }
+        public Measurement Measurement { get; set; }
 
         protected override void OnInitialized()
         {
-            Ingredient = new Ingredient();
+            Measurement = new Measurement();
         }
 
         public async Task OnValidSumbit()
         {
-            Context.Ingredient.Add(Ingredient);
+            Context.Measurement.Add(Measurement);
             await Context.SaveChangesAsync();
             NavBack();
         }
@@ -37,7 +37,7 @@ namespace Ravenous.Pages
 
         public void NavBack()
         {
-            Navigation.NavigateTo("/ingredients");
+            Navigation.NavigateTo("/measurements");
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ravenous.Pages
+namespace Ravenous.Pages.Ingredients
 {
     public partial class IngredientEditPage : ComponentBase
     {

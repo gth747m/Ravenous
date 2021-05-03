@@ -1,14 +1,16 @@
-﻿@page "/ingredients/add"
+﻿@page "/measurements/add"
 
-<h3>Add Ingredient</h3>
+<h3>Add Measurement</h3>
 
-<EditForm Model="@Ingredient" OnValidSubmit="@OnValidSumbit">
+<EditForm Model="@Measurement" OnValidSubmit="@OnValidSumbit">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
   <div class="form-group">
       <div class="input-group">
           <div class="input-group-prepend">
               <label class="input-group-text">Name</label>
           </div>
-          <InputText class="form-control" @bind-Value=Ingredient.Name />
+          <InputText class="form-control" @bind-Value=Measurement.Name />
       </div>
   </div>
   <button type="submit" class="btn btn-primary">Save</button>

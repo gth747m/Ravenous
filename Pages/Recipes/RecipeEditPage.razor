@@ -1,0 +1,66 @@
+﻿@page "/recipes/edit/{Id:int}"
+
+<div class="title-row">
+  <h3 class="title-heading">Edit Recipe</h3>
+  <button class="btn btn-outline-danger" @onclick="OnDelete">
+    <span class="oi oi-trash" aria-hidden="true"></span> Delete
+  </button>
+</div>
+
+@if (Recipe == null)
+{
+  <p>Loading...</p>
+}
+else
+{
+  <EditForm Model="@Recipe" OnValidSubmit="@OnValidSumbit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text">Name</label>
+        </div>
+        <InputText class="form-control" @bind-Value=Recipe.Name />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text">Rating</label>
+        </div>
+        <InputNumber class="form-control" @bind-Value=Recipe.Rating />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Ingredients</label>
+      @foreach(var ingredient in Recipe.RecipeIngredients)
+      {
+        <div class="input-group">
+            <InputSelect class="form-control" @bind-Value=ingredient.IngredientId >
+              @foreach(var ingred in IngredientList)
+              {
+                <option value="@ingred.IngredientId">@ingred.Name</option>
+              }
+            </InputSelect>
+            <InputNumber class="form-control" @bind-Value=ingredient.Amount />
+            <InputSelect class="form-control" @bind-Value=ingredient.MeasurementId >
+              @foreach(var measure in MeasurementList)
+              {
+                <option value="@measure.MeasurementId">@measure.Name</option>
+              }
+            </InputSelect>
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+          <button type="button" class="btn btn-outline-primary" @onclick="@OnAddIngredient">Add Ingredient</button>
+      </div>
+    </div>
+    <div class="form-group form-btn-group">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-danger" @onclick="@OnCancel">Cancel</button>
+    </div>
+  </EditForm>
+}

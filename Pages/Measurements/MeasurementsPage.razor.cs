@@ -5,32 +5,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ravenous.Pages
+namespace Ravenous.Pages.Measurements
 {
-    public partial class IngredientsPage : ComponentBase
+    public partial class MeasurementsPage : ComponentBase
     {
         [Inject]
         public RavenousContext Context { get; set; }
         [Inject]
         public NavigationManager Navigation { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
+        public List<Measurement> Measurements { get; set; }
 
         protected override void OnInitialized()
         {
-            Ingredients = Context.Ingredient
+            Measurements = Context.Measurement
                 .AsNoTracking()
                 .OrderBy(i => i.Name)
                 .ToList();
         }
         
-        public void OnIngredientClick(int id)
+        public void OnMeasurementClick(int id)
         {
-            Navigation.NavigateTo(string.Format("/ingredients/edit/{0}", id));
+            Navigation.NavigateTo(string.Format("/measurements/edit/{0}", id));
         }
 
-        public void OnAddIngredientClick()
+        public void OnAddMeasurementClick()
         {
-            Navigation.NavigateTo("/ingredients/add");
+            Navigation.NavigateTo("/measurements/add");
         }
     }
 }
