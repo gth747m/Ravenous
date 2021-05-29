@@ -8,6 +8,7 @@ namespace Ravenous.Models
         {
         }
 
+        public DbSet<Instruction> Instruction { get; set; }
         public DbSet<Ingredient> Ingredient { get; set; }
         public DbSet<Measurement> Measurement { get; set; }
         public DbSet<Recipe> Recipe { get; set; }
@@ -15,6 +16,8 @@ namespace Ravenous.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Instruction>()
+                .ToTable("Instruction");
             builder.Entity<Ingredient>()
                 .ToTable("Ingredient");
             builder.Entity<Measurement>()

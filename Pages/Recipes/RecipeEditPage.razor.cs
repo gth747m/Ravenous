@@ -25,6 +25,8 @@ namespace Ravenous.Pages.Recipes
             Recipe = await Context.Recipe
                 .Where(i => i.RecipeId == Id)
                 .Include(i => i.RecipeIngredients)
+                .Include(i => i.Instructions)
+                .AsSingleQuery()
                 .FirstOrDefaultAsync();
             IngredientList = await Context.Ingredient
                 .OrderBy(i => i.Name)
@@ -60,6 +62,13 @@ namespace Ravenous.Pages.Recipes
         public void OnAddIngredient()
         {
             Recipe.RecipeIngredients.Add(new RecipeIngredient());
+        }
+
+        public void OnAddInstruction()
+        {
+            Recipe.Instructions.Add(new Instruction {
+                Number = Recipe.Instructions.Count + 1,
+            });
         }
     }
 }

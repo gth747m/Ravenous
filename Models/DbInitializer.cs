@@ -243,6 +243,7 @@ namespace Ravenous.Models
                 new Ingredient { Name = "Horseradish" },
                 new Ingredient { Name = "Hot Italian Sausage" },
                 new Ingredient { Name = "Hot Sauce" },
+                new Ingredient { Name = "Ice" },
                 new Ingredient { Name = "Ice Cream" },
                 new Ingredient { Name = "Italian Parsley" },
                 new Ingredient { Name = "Italian Sausage" },

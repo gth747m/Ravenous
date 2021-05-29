@@ -23,6 +23,7 @@ namespace Ravenous.Pages.Recipes
         protected override async Task OnInitializedAsync()
         {
             Recipe = new Recipe();
+            Recipe.Instructions = new List<Instruction>();
             IngredientList = await Context.Ingredient
                 .OrderBy(i => i.Name)
                 .ToListAsync();
@@ -51,6 +52,13 @@ namespace Ravenous.Pages.Recipes
         public void OnAddIngredient()
         {
             Recipe.RecipeIngredients.Add(new RecipeIngredient());
+        }
+
+        public void OnAddInstruction()
+        {
+            Recipe.Instructions.Add(new Instruction {
+                Number = Recipe.Instructions.Count + 1,
+            });
         }
     }
 }

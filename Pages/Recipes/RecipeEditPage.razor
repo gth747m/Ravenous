@@ -33,7 +33,10 @@ else
       </div>
     </div>
     <div class="form-group">
-      <label>Ingredients</label>
+      <div class="input-group">
+        <label>Ingredients</label>
+        <button type="button" class="btn btn-outline-primary" @onclick="@OnAddIngredient">Add Ingredient</button>
+      </div>
       @foreach(var ingredient in Recipe.RecipeIngredients)
       {
         <div class="input-group">
@@ -55,8 +58,16 @@ else
     </div>
     <div class="form-group">
       <div class="input-group">
-          <button type="button" class="btn btn-outline-primary" @onclick="@OnAddIngredient">Add Ingredient</button>
+        <label>Instructions</label>
+        <button type="button" class="btn btn-outline-primary" @onclick="@OnAddInstruction">Add Instruction</button>
       </div>
+      @foreach(var instr in Recipe.Instructions)
+      {
+        <div class="input-group">
+            <InputNumber class="form-control" @bind-Value=instr.Number />
+            <InputText class="form-control" @bind-Value=instr.Text />
+        </div>
+      }
     </div>
     <div class="form-group form-btn-group">
       <button type="submit" class="btn btn-primary">Save</button>
