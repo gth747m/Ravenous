@@ -12,7 +12,7 @@ namespace Ravenous.Models
         public int InstructionId { get; set; }
         [Required]
         public int RecipeId { get; set; }
-        [Required]
+        [Required, Range(1, 999)]
         public int Number { get; set; }
         [Required]
         public string Text { get; set; }

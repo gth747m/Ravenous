@@ -22,9 +22,9 @@
       </div>
   </div>
   <div class="form-group">
-    <div class="input-group">
+    <div class="input-group group-title">
       <label>Ingredients</label>
-      <button type="button" class="btn btn-outline-primary" @onclick="@OnAddIngredient">Add Ingredient</button>
+      <button type="button" class="btn btn-outline-dark" @onclick="@OnAddIngredient">Add Ingredient</button>
     </div>
     @foreach(var ingredient in Recipe.RecipeIngredients)
     {
@@ -46,14 +46,14 @@
     }
   </div>
   <div class="form-group">
-    <div class="input-group">
+    <div class="input-group group-title">
       <label>Instructions</label>
-      <button type="button" class="btn btn-outline-primary" @onclick="@OnAddInstruction">Add Instruction</button>
+      <button type="button" class="btn btn-outline-dark" @onclick="@OnAddInstruction">Add Instruction</button>
     </div>
-    @foreach (var instr in Recipe.Instructions)
+    @foreach (var instr in Recipe.Instructions.OrderBy(i => i.Number))
     {
       <div class="input-group">
-        <InputNumber class="form-control" @bind-Value=instr.Number />
+        <InputNumber class="form-control instr-number" @bind-Value=instr.Number />
         <InputText class="form-control" @bind-Value=instr.Text />
       </div>
     }

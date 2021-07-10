@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Ravenous.Models
 {
@@ -25,5 +26,12 @@ namespace Ravenous.Models
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set;}
         public virtual ICollection<Instruction> Instructions { get; set; }
 
+        public void OrderInstructions(){
+            int i = 1;
+            foreach (var instr in Instructions.OrderBy(i => i.Number))
+            {
+                instr.Number = i++;
+            }
+        }
     }
 }

@@ -7,6 +7,16 @@
   flex-grow: 1;
 }
 
+.group-title {
+  display: inline-flex;
+  margin-bottom: 0.5rem;
+}
+
+.group-title > label {
+  flex-grow: 1;
+  font-size: x-large;
+}
+
 .add-btn {
   margin-right: 5px;
 }
@@ -21,4 +31,20 @@
 
 .form-btn-group > .btn:last-of-type {
   margin-right: 0px !important;
+}
+
+::deep .instr-number {
+  max-width: 3.5rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+::deep input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+::deep input[type=number] {
+  -moz-appearance: textfield;
 }

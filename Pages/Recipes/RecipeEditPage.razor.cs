@@ -38,6 +38,19 @@ namespace Ravenous.Pages.Recipes
 
         public async Task OnValidSumbit()
         {
+            // Remove empty ingredients
+            var ingredientsToRemove = Recipe.RecipeIngredients.Where(i => i.IngredientId == 0).ToList();
+            foreach (var i in ingredientsToRemove)
+            {
+                Recipe.RecipeIngredients.Remove(i);
+            }
+            // Remove empty instructions
+            var instructionsToRemove = Recipe.Instructions.Where(i => String.IsNullOrEmpty(i.Text)).ToList();
+            foreach (var i in instructionsToRemove)
+            {
+                Recipe.Instructions.Remove(i);
+            }
+            // Order Instructions
             await Context.SaveChangesAsync();
             NavBack();
         }
