@@ -1,0 +1,23 @@
+﻿#recipeDetailColumn {
+    width: 9.5rem;
+}
+
+.checkbox-row {
+  cursor: pointer;
+}
+
+#ingredientCheckColumn {
+  width: 2rem;
+}
+
+#ingredientAmountColumn {
+  width: 7rem;
+}
+
+#instructionCheckColumn {
+  width: 2rem;
+}
+
+#instructionNumberColumn {
+  width: 2rem;
+}

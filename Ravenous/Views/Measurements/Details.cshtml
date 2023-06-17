@@ -1,0 +1,20 @@
+﻿@model Ravenous.Models.DbModels.Measurement
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Measurement Details</h1>
+<hr />
+
+<form>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" value="@Model.Name" readonly/>
+    </div>
+</form>
+
+<div class="btn-list">
+    <a asp-action="Edit" asp-route-id="@Model.MeasurementId" class="btn btn-danger">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

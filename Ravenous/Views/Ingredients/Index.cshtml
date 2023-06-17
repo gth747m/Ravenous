@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Ravenous.Models.DbModels.Ingredient>
+
+@{
+    ViewData["Title"] = "Ingredients";
+}
+
+<h1>Ingredients</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) 
+{
+        <tr class="ingredient-row nav-row" data-ingredient-id="@item.IngredientId">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/ingredient/ingredient_index.js" asp-append-version="true"></script>
+}

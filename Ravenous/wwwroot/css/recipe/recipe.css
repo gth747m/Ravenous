@@ -1,0 +1,41 @@
+﻿/* Ingredients
+-------------------------------------------------- */
+.btn-ingredient-delete {
+  display: inline-flex;
+}
+
+.btn-ingredient-delete > .oi {
+  align-self: center;
+  cursor: pointer;
+  margin-left: 6px;
+  color: #dc3545
+}
+
+.btn-ingredient-delete > .oi:hover {
+  color: #c82333;
+}
+
+.ingredient-number {
+  min-width: 2.75rem;
+}
+
+/* Instructions
+-------------------------------------------------- */
+.btn-instruction-delete {
+  display: inline-flex;
+}
+
+.btn-instruction-delete > .oi {
+  align-self: center;
+  cursor: pointer;
+  margin-left: 6px;
+  color: #dc3545;
+}
+
+.btn-instruction-delete > .oi:hover {
+  color: #c82333;
+}
+
+.instruction-number {
+  min-width: 2.75rem;
+}

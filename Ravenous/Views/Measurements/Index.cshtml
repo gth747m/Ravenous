@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Ravenous.Models.DbModels.Measurement>
+
+@{
+    ViewData["Title"] = "Measurements";
+}
+
+<h1>Measurements</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) 
+{
+        <tr class="measurement-row nav-row" data-measurement-id="@item.MeasurementId">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/measurement/measurement_index.js" asp-append-version="true"></script>
+}

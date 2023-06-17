@@ -1,0 +1,96 @@
+﻿@model Ravenous.Models.DbModels.Recipe
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="~/css/recipe/recipe_details.css" asp-append-version="true"/>
+
+<h1>@Model.Name</h1>
+
+<table class="table recipe-header">
+    <colgroup>
+        <col id="recipeDetailColumn"/>
+        <col />
+    </colgroup>
+    <tbody>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Rating)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PrepTime)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.PrepTime)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CookTime)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.CookTime)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div>
+    <h2>
+        Ingredients
+    </h2>
+    <table class="table table-hover">
+        <colgroup>
+            <col id="ingredientCheckColumn"/>
+            <col id="ingredientAmountColumn"/>
+            <col />
+        </colgroup>
+        @foreach (var ingredientAssignment in @Model.RecipeIngredients.OrderBy(i => i.Ingredient.Name))
+        {
+            <tr class="checkbox-row">
+                <th scope="row"><input class="ingredient-checkbox" type="checkbox" /></th>
+                <td>@ingredientAssignment.Amount @ingredientAssignment.Measurement.Name</td>
+                <td>@ingredientAssignment.Ingredient.Name</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <h2>
+        Instructions
+    </h2>
+    <table class="table table-hover">
+        <colgroup>
+            <col id="instructionCheckColumn"/>
+            <col id="instructionNumberColumn"/>
+            <col />
+        </colgroup>
+        @{
+            var i = 1;
+        }
+        @foreach (var instruction in @Model.Instructions.OrderBy(i => i.Number))
+        {
+            <tr class="checkbox-row">
+                <th scope="row"><input class="instruction-checkbox" type="checkbox" /></th>
+                <td>@(i++).</td>
+                <td>@instruction.Text</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="btn-list">
+    <a asp-action="Edit" asp-route-id="@Model.RecipeId" class="btn btn-danger">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/js/recipe/recipe_details.js" asp-append-version="true"></script>
+}
