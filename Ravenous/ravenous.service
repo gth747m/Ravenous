@@ -1,0 +1,17 @@
+[Unit]
+Description=Ravenous
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/ravenous
+ExecStart=/opt/ravenous/Ravenous
+Restart=always
+RestartSec=90
+KillSignal=SIGINT
+SyslogIdentifier=ravenous
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=DbConnectionString=''
+
+[Install]
+WantedBy=multi-user.target
