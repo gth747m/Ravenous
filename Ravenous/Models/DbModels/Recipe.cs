@@ -20,10 +20,10 @@ namespace Ravenous.Models.DbModels
         public int Rating { get; set; }
         [Required, Display(Name="Prep Time"), 
             DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
-        public DateTime PrepTime { get; set; }
+        public TimeOnly PrepTime { get; set; }
         [Required, Display(Name="Cook Time"),
             DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
-        public DateTime CookTime { get; set; }
+        public TimeOnly CookTime { get; set; }
 
         public virtual ICollection<IngredientAssignment> RecipeIngredients { get; set;}
         public virtual ICollection<Instruction> Instructions { get; set; }
