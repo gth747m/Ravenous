@@ -1,154 +1,148 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ravenous.Models.DbModels;
 
-namespace Ravenous.Controllers
+namespace Ravenous.Controllers;
+
+public class IngredientsController : Controller
 {
-    public class IngredientsController : Controller
+    private readonly RavenousContext _context;
+
+    public IngredientsController(RavenousContext context)
     {
-        private readonly RavenousContext _context;
+        _context = context;
+    }
 
-        public IngredientsController(RavenousContext context)
+    // GET: Ingredients
+    public async Task<IActionResult> Index()
+    {
+        return View(await _context.Ingredients
+            .OrderBy(i => i.Name)
+            .ToListAsync());
+    }
+
+    // GET: Ingredients/Details/5
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
-
-        // GET: Ingredients
-        public async Task<IActionResult> Index()
+        var ingredient = await _context.Ingredients
+            .FirstOrDefaultAsync(m => m.IngredientId == id);
+        if (ingredient == null)
         {
-            return View(await _context.Ingredients
-                .OrderBy(i => i.Name)
-                .ToListAsync());
+            return NotFound();
         }
+        return View(ingredient);
+    }
 
-        // GET: Ingredients/Details/5
-        public async Task<IActionResult> Details(int? id)
+    // GET: Ingredients/Create
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    // POST: Ingredients/Create
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create([Bind("IngredientId,Name")] Ingredient ingredient)
+    {
+        if (ModelState.IsValid)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ingredient = await _context.Ingredients
-                .FirstOrDefaultAsync(m => m.IngredientId == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
-            return View(ingredient);
-        }
-
-        // GET: Ingredients/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Ingredients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IngredientId,Name")] Ingredient ingredient)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(ingredient);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(ingredient);
-        }
-
-        // GET: Ingredients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ingredient = await _context.Ingredients.FindAsync(id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-            return View(ingredient);
-        }
-
-        // POST: Ingredients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IngredientId,Name")] Ingredient ingredient)
-        {
-            if (id != ingredient.IngredientId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(ingredient);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!IngredientExists(ingredient.IngredientId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(ingredient);
-        }
-
-        // GET: Ingredients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ingredient = await _context.Ingredients
-                .FirstOrDefaultAsync(m => m.IngredientId == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
-            return View(ingredient);
-        }
-
-        // POST: Ingredients/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var ingredient = await _context.Ingredients.FindAsync(id);
-            _context.Ingredients.Remove(ingredient);
+            _context.Add(ingredient);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        return View(ingredient);
+    }
 
-        private bool IngredientExists(int id)
+    // GET: Ingredients/Edit/5
+    public async Task<IActionResult> Edit(int? id)
+    {
+        if (id == null)
         {
-            return _context.Ingredients.Any(e => e.IngredientId == id);
+            return NotFound();
         }
+        var ingredient = await _context.Ingredients.FindAsync(id);
+        if (ingredient == null)
+        {
+            return NotFound();
+        }
+        return View(ingredient);
+    }
+
+    // POST: Ingredients/Edit/5
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, [Bind("IngredientId,Name")] Ingredient ingredient)
+    {
+        if (id != ingredient.IngredientId)
+        {
+            return NotFound();
+        }
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(ingredient);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!IngredientExists(ingredient.IngredientId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        return View(ingredient);
+    }
+
+    // GET: Ingredients/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var ingredient = await _context.Ingredients
+            .FirstOrDefaultAsync(m => m.IngredientId == id);
+        if (ingredient == null)
+        {
+            return NotFound();
+        }
+        return View(ingredient);
+    }
+
+    // POST: Ingredients/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var ingredient = await _context.Ingredients.FindAsync(id);
+        if (ingredient == null)
+        {
+            return NotFound();
+        }
+        _context.Ingredients.Remove(ingredient);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool IngredientExists(int id)
+    {
+        return _context.Ingredients.Any(e => e.IngredientId == id);
     }
 }

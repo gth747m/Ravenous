@@ -51,12 +51,12 @@
             <col id="ingredientAmountColumn"/>
             <col />
         </colgroup>
-        @foreach (var ingredientAssignment in @Model.RecipeIngredients.OrderBy(i => i.Ingredient.Name))
+        @foreach (var ingredientAssignment in @Model.IngredientAssignments.OrderBy(i => i.Ingredient!.Name))
         {
             <tr class="checkbox-row">
                 <th scope="row"><input class="ingredient-checkbox" type="checkbox" /></th>
-                <td>@ingredientAssignment.Amount @ingredientAssignment.Measurement.Name</td>
-                <td>@ingredientAssignment.Ingredient.Name</td>
+                <td>@ingredientAssignment.Amount @ingredientAssignment.Measurement!.Name</td>
+                <td>@ingredientAssignment.Ingredient!.Name</td>
             </tr>
         }
     </table>

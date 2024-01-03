@@ -1,18 +1,43 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ravenous.Models.DbModels
+namespace Ravenous.Models.DbModels;
+
+/// <summary>
+/// Recipe Instructions
+/// </summary>
+[Display(Name = "Instructions")]
+public class Instruction
 {
-    public class Instruction
-    {
-        public int InstructionId { get; set; }
-        [Required]
-        public int RecipeId { get; set; }
-        [Required, Range(1, 999), Display(Name="Step #")]
-        public int Number { get; set; }
-        [Required, Display(Name="Instruction")]
-        public string Text { get; set; }
-        
-        public virtual Recipe Recipe { get; set; }
-    }
+    /// <summary>
+    /// Primary Key
+    /// </summary>
+    [Key]
+    public int InstructionId { get; set; }
+    /// <summary>
+    /// Recipe Foreign Key
+    /// </summary>
+    [Required]
+    public int RecipeId { get; set; }
+    /// <summary>
+    /// Instruction Number
+    /// </summary>
+    [Display(Name = "Step #")]
+    [Range(1, 999)]
+    [Required]
+    public int Number { get; set; }
+    /// <summary>
+    /// Instruction Text
+    /// </summary>
+    [Display(Name = "Instruction")]
+    [Required]
+    public required string Text { get; set; }
+
+    #region NavigationProperties
+    /// <summary>
+    /// Recipe this instruction is for
+    /// </summary>
+    [InverseProperty(nameof(Models.DbModels.Recipe.Instructions))]
+    public virtual Recipe? Recipe { get; set; }
+    #endregion
 }

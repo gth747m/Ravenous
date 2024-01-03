@@ -39,7 +39,7 @@
             @{
                 var i = 1;
             }
-            @foreach (var recipeIngredient in Model.RecipeIngredients.OrderBy(i => i.Ingredient.Name))
+            @foreach (var recipeIngredient in Model.IngredientAssignments.OrderBy(i => i.Ingredient!.Name))
             {
                 <div class="input-group">
                     <span class="input-group-text ingredient-number">@(i++)</span>
