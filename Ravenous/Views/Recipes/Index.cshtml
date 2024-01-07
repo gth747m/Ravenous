@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.CookTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipeType)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +43,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CookTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipeType!.Name)
             </td>
         </tr>
 }

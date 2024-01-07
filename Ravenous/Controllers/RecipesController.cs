@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ravenous.Models.DbModels;
 
@@ -15,14 +16,18 @@ public class RecipesController : Controller
         _context = context;
     }
 
-    private async Task GetMeasurementsAndIngredients()
+    private async Task PopulateViewBag()
     {
+        var recipeTypes = await _context.RecipeTypes
+            .OrderBy(t => t.Name)
+            .ToListAsync();
         var measurements = await _context.Measurements
             .OrderBy(m => m.Name)
             .ToListAsync();
         var ingredients = await _context.Ingredients
             .OrderBy(i => i.Name)
             .ToListAsync();
+        ViewBag.RecipeTypes = new SelectList(recipeTypes, "RecipeTypeId", "Name");
         ViewBag.Measurements = measurements;
         ViewBag.Ingredients = ingredients;
     }
@@ -30,7 +35,10 @@ public class RecipesController : Controller
     // GET: Recipes
     public async Task<IActionResult> Index()
     {
-        return View(await _context.Recipes.ToListAsync());
+        var recipes = await _context.Recipes
+          .Include(r => r.RecipeType)
+          .ToListAsync();
+        return View(recipes);
     }
 
     // GET: Recipes/Details/5
@@ -47,20 +55,21 @@ public class RecipesController : Controller
             .ThenInclude(i => i.Ingredient)
             .Include(r => r.IngredientAssignments)
             .ThenInclude(i => i.Measurement)
+            .Include(r => r.RecipeType)
             .FirstOrDefaultAsync();
         if (recipe == null)
         {
             return NotFound();
         }
-        recipe.IngredientAssignments.OrderBy(r => r.Ingredient!.Name);
-        recipe.Instructions.OrderBy(i => i.Number);
+        recipe.IngredientAssignments = recipe.IngredientAssignments.OrderBy(r => r.Ingredient!.Name).ToList();
+        recipe.Instructions = recipe.Instructions.OrderBy(i => i.Number).ToList();
         return View(recipe);
     }
 
     // GET: Recipes/Create
     public async Task<IActionResult> Create()
     {
-        await GetMeasurementsAndIngredients();
+        await PopulateViewBag();
         return View(new Recipe() { Name = string.Empty });
     }
 
@@ -69,7 +78,7 @@ public class RecipesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("RecipeId,Name,Rating,PrepTime,CookTime")] Recipe recipe,
+    public async Task<IActionResult> Create([Bind("RecipeId,Name,Rating,PrepTime,CookTime,RecipeTypeId")] Recipe recipe,
         float[] amounts, int[] measurementIds, int[] ingredientIds, string[] instructions)
     {
         if ((amounts.Length != measurementIds.Length) ||
@@ -112,15 +121,16 @@ public class RecipesController : Controller
             .Include(r => r.IngredientAssignments)
             .ThenInclude(r => r.Measurement)
             .Include(r => r.Instructions)
+            .Include(r => r.RecipeType)
             .Where(r => r.RecipeId == id.Value)
             .FirstOrDefaultAsync();
         if (recipe == null)
         {
             return NotFound();
         }
-        recipe.IngredientAssignments.OrderBy(r => r.Ingredient!.Name);
-        recipe.Instructions.OrderBy(i => i.Number);
-        await GetMeasurementsAndIngredients();
+        recipe.IngredientAssignments = recipe.IngredientAssignments.OrderBy(r => r.Ingredient!.Name).ToList();
+        recipe.Instructions = recipe.Instructions.OrderBy(i => i.Number).ToList();
+        await PopulateViewBag();
         return View(recipe);
     }
 
@@ -129,7 +139,7 @@ public class RecipesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("RecipeId,Name,Rating,PrepTime,CookTime")] Recipe recipe,
+    public async Task<IActionResult> Edit(int id, [Bind("RecipeId,Name,Rating,PrepTime,CookTime,RecipeTypeId")] Recipe recipe,
         float[] amounts, int[] measurementIds, int[] ingredientIds, string[] instructions)
     {
         if (id != recipe.RecipeId)
