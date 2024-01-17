@@ -1,22 +1,22 @@
 ﻿namespace RecipeDetails {
-    /* 
-     * Toggle checkboxes on row click
-     */
-    function bindCheckboxRowClick(row: HTMLTableRowElement) {
-        const inputs: Element[] = Array.from(row.getElementsByTagName("input"));
-        inputs.forEach((element: Element) => {
-            const input: HTMLInputElement = element as HTMLInputElement;
-            if (input.type == "checkbox") {
-                input.checked = !input.checked;
-            }
-        });
-    }
-
     /**
      * Bind on click for each checkbox row 
      */
     const checkboxRows: Element[] = Array.from(document.getElementsByClassName("checkbox-row"));
     checkboxRows.forEach((row: Element) => {
-        row.addEventListener("click", function () { bindCheckboxRowClick(row as HTMLTableRowElement); });
+        row.addEventListener("click", function (event) {
+            // If they didn't click on the checkbox itself
+            if ((event.target as HTMLElement).tagName !== "INPUT") {
+                // Get the checkbox
+                const inputs: Element[] = Array.from(row.getElementsByTagName("INPUT"));
+                inputs.forEach((element: Element) => {
+                    const input: HTMLInputElement = element as HTMLInputElement;
+                    // Check it
+                    if (input.type == "checkbox") {
+                        input.checked = !input.checked;
+                    }
+                });
+            }
+        });
     });
 }

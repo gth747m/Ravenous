@@ -33,11 +33,16 @@ public class RecipesController : Controller
     }
 
     // GET: Recipes
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? recipeType)
     {
         var recipes = await _context.Recipes
           .Include(r => r.RecipeType)
           .ToListAsync();
+        if (recipeType != null)
+        {
+            recipes = recipes
+                .Where(r => r.RecipeTypeId == recipeType).ToList();
+        }
         return View(recipes);
     }
 
